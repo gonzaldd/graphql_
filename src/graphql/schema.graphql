@@ -1,0 +1,13 @@
+type Query {
+  ping: String!
+  product(id: ID!): Product
+  allProducts: [Product]!
+}
+
+type Product {
+  id: ID!
+  name: String!
+  price: Float!
+  description: String
+  stock: Int
+}

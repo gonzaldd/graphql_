@@ -1,36 +1,28 @@
 const { ApolloServer } = require('@apollo/server');
-const { ApolloServerPluginLandingPageGraphQLPlayground } = require('@apollo/server-plugin-landing-page-graphql-playground');
-const { expressMiddleware  } = require('@apollo/server/express4');
+const {
+  ApolloServerPluginLandingPageGraphQLPlayground,
+} = require('@apollo/server-plugin-landing-page-graphql-playground');
+const { expressMiddleware } = require('@apollo/server/express4');
+const { loadFiles } = require('@graphql-tools/load-files');
+const resolvers = require('./resolvers');
 
-const typeDefs = `
-  type Query {
-    hello: String
-  }
-`;
-
-const resolvers = {
-  Query: {
-    hello: () => 'hola mundo',
-  }
-}
+const isDev = Boolean(process.env.NODE_ENV);
 
 const useGraphql = async (app) => {
   const server = new ApolloServer({
-    typeDefs,
+    typeDefs: await loadFiles('./src/**/*.graphql'),
     resolvers,
-    playground: true,
-    plugins: [
-      ApolloServerPluginLandingPageGraphQLPlayground
-    ]
+    playground: isDev,
+    plugins: [ApolloServerPluginLandingPageGraphQLPlayground],
   });
 
   await server.start();
 
-  app.use(expressMiddleware(server, {
-    context: async ({ req }) => ({ token: req.headers.token }),
-  }));
-  
-}
+  app.use(
+    expressMiddleware(server, {
+      context: async ({ req }) => ({ token: req.headers.token }),
+    })
+  );
+};
 
-
-module.exports = useGraphql 
+module.exports = useGraphql;
