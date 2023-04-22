@@ -1,10 +1,13 @@
-const { getProduct, getProducts } = require('./product.resolvers');
+const { getProduct, getProducts, addProduct } = require('./product.resolvers');
 
 const resolvers = {
   Query: {
     ping: () => 'pong',
     product: getProduct,
     allProducts: getProducts,
+  },
+  Mutation: {
+    addProduct,
   },
 };
 

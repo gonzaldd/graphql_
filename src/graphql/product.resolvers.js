@@ -8,8 +8,12 @@ const getProduct = async (_, { id }) => {
 
 const getProducts = async () => {
   const products = await service.find({});
-  console.log(products);
   return products;
 };
 
-module.exports = { getProduct, getProducts };
+const addProduct = async (_, { dto }) => {
+  const newProduct = await service.create(dto);
+  return newProduct;
+};
+
+module.exports = { getProduct, getProducts, addProduct };
