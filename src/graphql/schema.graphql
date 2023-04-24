@@ -5,6 +5,7 @@ type Query {
 }
 
 type Mutation {
+  login(email: String!, pass: String!): Auth
   addProduct(dto: CreateProductDto!): Product
   updateProduct(dto: UpdateProductDto!): Product
   deleteProduct(dto: DeleteProductDto!): ID
@@ -24,6 +25,16 @@ type Category {
   id: ID!
   name: String!
   image: String!
+}
+
+type Auth {
+  user: User!
+  access_token: String!
+}
+
+type User {
+  id: ID!
+  role: String!
 }
 
 input CreateProductDto {
