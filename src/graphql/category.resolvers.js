@@ -1,22 +1,18 @@
-const boom = require('@hapi/boom');
-
 const CategoryService = require('../services/category.service');
-const categoryServiceInstance = new CategoryService()
+const categoryServiceInstance = new CategoryService();
+const checkJwtGql = require('../utils/checkJwtGql');
+const checkRoleGql = require('../utils/checkRolesGql');
 
-const categories = () => categoryServiceInstance.find({})
+const categories = () => categoryServiceInstance.find({});
 
-const createCategory = async(_, {name, image}, context ) => {
-    const { user } = await context.authenticate('jwt', { session: false });
+const createCategory = async (_, { name, image }, context) => {
+  const user = await checkJwtGql(context);
+  checkRoleGql(user, 'admin');
 
-    if(!user){
-        throw boom.unauthorized()
-    }
-    
-    return await categoryServiceInstance.create({name, image})
-}
-
+  return await categoryServiceInstance.create({ name, image });
+};
 
 module.exports = {
-    categories,
-    createCategory
-}
+  categories,
+  createCategory,
+};
