@@ -2,6 +2,7 @@ type Query {
   ping: String!
   product(id: ID!): Product
   allProducts: [Product]!
+  allCategories: [Category]!
 }
 
 type Mutation {
@@ -9,6 +10,7 @@ type Mutation {
   addProduct(dto: CreateProductDto!): Product
   updateProduct(dto: UpdateProductDto!): Product
   deleteProduct(dto: DeleteProductDto!): ID
+  createCategory(name: String!, image: String!): Category
 }
 
 type Product {
