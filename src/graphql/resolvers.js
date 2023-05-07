@@ -4,23 +4,32 @@ const {
   addProduct,
   updateProduct,
   deleteProduct,
+  getProductByCategory,
 } = require('./product.resolvers');
 const { login } = require('./auth.resolvers');
-const { createCategory, categories } = require('./category.resolvers')
+const {
+  createCategory,
+  categories,
+  getCategory,
+} = require('./category.resolvers');
 
 const resolvers = {
   Query: {
     ping: () => 'pong',
     product: getProduct,
     allProducts: getProducts,
-    allCategories: categories
+    allCategories: categories,
+    category: getCategory,
   },
   Mutation: {
     addProduct,
     updateProduct,
     deleteProduct,
     login,
-    createCategory
+    createCategory,
+  },
+  Category: {
+    products: getProductByCategory,
   },
 };
 

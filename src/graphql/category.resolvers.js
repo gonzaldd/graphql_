@@ -12,7 +12,12 @@ const createCategory = async (_, { name, image }, context) => {
   return await categoryServiceInstance.create({ name, image });
 };
 
+const getCategory = async (_, { id }) => {
+  return await categoryServiceInstance.findOne(id);
+};
+
 module.exports = {
   categories,
   createCategory,
+  getCategory,
 };

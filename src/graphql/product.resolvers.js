@@ -14,10 +14,15 @@ const deleteProduct = async (_, { dto }) => {
   return dto.id;
 };
 
+const getProductByCategory = async (parent) => {
+  return await service.getByCategory(parent.dataValues.id);
+};
+
 module.exports = {
   getProduct,
   getProducts,
   addProduct,
   updateProduct,
   deleteProduct,
+  getProductByCategory,
 };
